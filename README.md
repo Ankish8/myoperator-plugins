@@ -18,7 +18,7 @@ Create UIs matching the myOperator design system aesthetic. Generates standalone
 
 ```bash
 # Add the marketplace
-/plugin marketplace add myoperator/myoperator-plugins
+/plugin marketplace add Ankish8/myoperator-plugins
 
 # Install the design plugin
 /plugin install myoperator-design@myoperator-plugins

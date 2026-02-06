@@ -1,7 +1,7 @@
 {
   "name": "myoperator-plugins",
   "owner": {
-    "name": "myoperator"
+    "name": "Ankish8"
   },
   "description": "Official myOperator plugins for Claude Code",
   "plugins": [
