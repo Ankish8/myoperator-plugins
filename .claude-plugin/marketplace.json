@@ -1,0 +1,14 @@
+{
+  "name": "myoperator-plugins",
+  "owner": {
+    "name": "myoperator"
+  },
+  "description": "Official myOperator plugins for Claude Code",
+  "plugins": [
+    {
+      "name": "myoperator-design",
+      "description": "Create UIs matching the myOperator design system aesthetic. Generates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.",
+      "source": "./plugins/myoperator-design"
+    }
+  ]
+}
