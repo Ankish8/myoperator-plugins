@@ -1,6 +1,6 @@
 ---
 name: myoperator-design
-description: Create UIs matching the myOperator design system. Use this skill when the user asks to "build with myoperator design", "create myoperator-style UI", "use myoperator design system", "myoperator dashboard", "myoperator page", or asks for interfaces, pages, dashboards, or components that should follow myOperator's visual language. Invoke with /myoperator-design. Generates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.
+description: Generate UIs matching the myOperator design system. Use this skill when the user asks to "build with myoperator design", "create myoperator-style UI", "use myoperator design system", "myoperator dashboard", "myoperator page", or asks for interfaces, pages, dashboards, or components that should follow myOperator's visual language. Creates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.
 version: 1.0.0
 ---
 

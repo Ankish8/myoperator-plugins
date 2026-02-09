@@ -3,11 +3,11 @@
   "owner": {
     "name": "Ankish8"
   },
-  "description": "Official myOperator plugins for Claude Code",
+  "description": "myOperator design system plugins for AI-assisted UI development",
   "plugins": [
     {
       "name": "myoperator-design",
-      "description": "Create UIs matching the myOperator design system aesthetic. Generates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.",
+      "description": "Generate UIs matching the myOperator design system aesthetic. Creates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.",
       "source": "./plugins/myoperator-design"
     }
   ]

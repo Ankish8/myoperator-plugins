@@ -1,12 +1,12 @@
-# myOperator Plugins for Claude Code
+# myOperator Design System Plugins
 
-Official Claude Code plugins from myOperator.
+AI-assisted design system plugins for generating consistent UI components.
 
 ## Available Plugins
 
 ### myoperator-design
 
-Create UIs matching the myOperator design system aesthetic. Generates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.
+Generate UIs matching the myOperator design system aesthetic. Creates standalone React/Tailwind code with the design system's color tokens, typography, and component patterns.
 
 **Features:**
 - Complete color system with semantic tokens (primary blue-gray, turquoise accent)
@@ -26,7 +26,7 @@ Create UIs matching the myOperator design system aesthetic. Generates standalone
 
 ## Usage
 
-Once installed, the `myoperator-design` skill activates when you ask Claude to build UI matching the myOperator design system:
+Once installed, the `myoperator-design` skill activates when you ask your AI assistant to build UI matching the myOperator design system:
 
 - "Build a dashboard with myoperator design"
 - "Create a settings page using myoperator design system"
