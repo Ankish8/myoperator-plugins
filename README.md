@@ -6,22 +6,19 @@ AI skills for [Claude Code](https://claude.ai/code) that generate UI matching th
 
 ## Install
 
-Run these two commands inside any Claude Code session:
+Two steps, both run inside a Claude Code session:
 
+**Step 1 — Register the marketplace (one-time only):**
 ```
 /plugin marketplace add Ankish8/myoperator-plugins
 ```
-```
-/plugin install myoperator-design@Ankish8/myoperator-plugins
-```
 
-Or use the Claude Code CLI:
-
-```bash
-claude plugin install myoperator-design@Ankish8/myoperator-plugins
+**Step 2 — Install the plugin:**
+```
+/plugin install myoperator-design@myoperator-plugins
 ```
 
-> First-time only: the marketplace step registers the source. After that, future installs and updates are a single command.
+> Step 1 is required before Step 2. It registers the source under the name `myoperator-plugins`. After that, you reference it as `@myoperator-plugins` for installs and updates.
 
 ---
 
@@ -58,20 +55,25 @@ All generated code uses CSS variables — never hardcoded colors.
 
 ## Team Setup
 
-To share the plugin across your whole team, add this to your project's `.claude/settings.json`:
+To share the plugin across your whole team without everyone running Step 1, add this to your project's `.claude/settings.json`:
 
 ```json
 {
-  "enabledPlugins": {
-    "myoperator-design@Ankish8/myoperator-plugins": true
+  "extraKnownMarketplaces": {
+    "myoperator-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "Ankish8/myoperator-plugins"
+      }
+    }
   }
 }
 ```
 
-Then each developer runs the install once:
+Then each developer only needs Step 2:
 
 ```
-/plugin install myoperator-design@Ankish8/myoperator-plugins
+/plugin install myoperator-design@myoperator-plugins
 ```
 
 ---
@@ -79,13 +81,7 @@ Then each developer runs the install once:
 ## Update
 
 ```
-/plugin update myoperator-design@Ankish8/myoperator-plugins
-```
-
-Or via CLI:
-
-```bash
-claude plugin update myoperator-design@Ankish8/myoperator-plugins
+/plugin update myoperator-design@myoperator-plugins
 ```
 
 ---
