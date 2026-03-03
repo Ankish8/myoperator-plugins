@@ -126,19 +126,6 @@ cp AGENTS.md ./AGENTS.md
 
 ---
 
-## What the Rules Enforce
-
-| Rule | Why it matters |
-|------|---------------|
-| No hardcoded hex colors — use `--semantic-*` CSS variables | Design consistency, theme support |
-| Source Sans Pro font, weights 400/600/700 | Brand typography |
-| Modals use `z-[9999]`, never `z-50` | Host app navbar is at z-index 1000+ |
-| Turquoise (#2BBCCA) only for interactive elements | Not for charts/decoration |
-| Default body text = 16px | Correct type scale |
-| Enterprise SaaS aesthetic — no flashy animations | Design language consistency |
-
----
-
 ## Available Plugins
 
 | Plugin | Description |
