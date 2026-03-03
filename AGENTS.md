@@ -1,0 +1,128 @@
+# myOperator Design System Rules
+
+This file is read by AI coding assistants (GitHub Copilot, Gemini CLI, Cursor, Windsurf, Aider, Continue, and others) to enforce the myOperator design system when generating UI code.
+
+---
+
+## CRITICAL: Never Use Hardcoded Colors
+
+All UI code must use CSS custom properties (variables), never raw hex values.
+
+**The full token set to include in generated standalone files:**
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+:root {
+  --semantic-primary: #343E55;
+  --semantic-primary-hover: #2F384D;
+  --semantic-primary-surface: #EBECEE;
+  --semantic-brand: #2BBCCA;
+  --semantic-brand-hover: #1F858F;
+  --semantic-brand-surface: #EAF8FA;
+  --semantic-bg-primary: #FFFFFF;
+  --semantic-bg-ui: #F5F5F5;
+  --semantic-bg-hover: #D5D7DA;
+  --semantic-text-primary: #181D27;
+  --semantic-text-secondary: #343E55;
+  --semantic-text-muted: #717680;
+  --semantic-text-placeholder: #A2A6B1;
+  --semantic-text-link: #4275D6;
+  --semantic-text-inverted: #FFFFFF;
+  --semantic-border-layout: #E9EAEB;
+  --semantic-border-input: #E9EAEB;
+  --semantic-border-input-focus: #2BBCCA;
+  --semantic-error-primary: #F04438;
+  --semantic-error-surface: #FEF3F2;
+  --semantic-error-text: #B42318;
+  --semantic-error-border: #FDA29B;
+  --semantic-success-primary: #17B26A;
+  --semantic-success-surface: #ECFDF3;
+  --semantic-success-text: #067647;
+  --semantic-warning-primary: #F79009;
+  --semantic-warning-surface: #FFFAEB;
+  --semantic-info-primary: #4275D6;
+  --semantic-info-surface: #ECF1FB;
+  --semantic-disabled-primary: #A2A6B1;
+  --semantic-disabled-secondary: #EBECEE;
+  --semantic-disabled-text: #717680;
+  --semantic-disabled-border: #D5D7DA;
+}
+```
+
+**Figma hex → token mapping:**
+| Figma hex | Use this token instead |
+|-----------|------------------------|
+| `#343E55` | `--semantic-primary` |
+| `#F5F5F5` | `--semantic-bg-ui` |
+| `#717680` | `--semantic-text-muted` |
+| `#F04438` | `--semantic-error-primary` |
+| `#17B26A` | `--semantic-success-primary` |
+| `#E9EAEB` | `--semantic-border-layout` |
+| `#2BBCCA` | `--semantic-brand` (interactive elements only) |
+
+---
+
+## Typography
+
+- **Font**: `'Source Sans Pro', sans-serif` — always import from Google Fonts with `wght@400;600;700`
+- Default body text = **16px**. Use 14px only for secondary/helper text. 12px for rare metadata.
+- Apply to body: `font-family: 'Source Sans Pro', sans-serif;`
+
+---
+
+## Modal and Overlay z-index
+
+**Always use `z-[9999]`** for modals, dialogs, drawers, and overlays.
+
+The host myOperator app has a navigation bar at `z-index: 1000+`. Using Tailwind's default `z-50` (z-index: 50) causes modals to render behind the navigation. This is a known bug pattern.
+
+```jsx
+{/* CORRECT */}
+<div className="fixed inset-0 z-[9999] bg-black/50" />
+<div className="fixed left-1/2 top-1/2 z-[9999] -translate-x-1/2 -translate-y-1/2 ...">
+
+{/* WRONG — renders behind nav */}
+<div className="fixed inset-0 z-50 bg-black/50" />
+```
+
+---
+
+## Brand Color Usage
+
+**Turquoise (#2BBCCA / `--semantic-brand`) is ONLY for:**
+- Input focus rings
+- Active/selected states (nav items, toggles)
+- Interactive badge indicators (e.g., "Live")
+- Clickable link text
+
+**Do NOT use turquoise for:** charts, graphs, data visualization, decorative elements, large backgrounds, non-interactive content. Use `--semantic-primary` (#343E55) for data visualization.
+
+---
+
+## Design Language
+
+myOperator's aesthetic is **enterprise SaaS** — professional, clean, purposeful. Not flashy, not playful, not experimental.
+
+- Border radius: `rounded` (4px) for small elements, `rounded-lg` (8px) for cards/modals
+- Transitions: `transition-all duration-200` for smooth interactions
+- Shadows: `shadow-sm` (cards), `shadow-lg` (modals) — never heavy shadows
+- All interactive elements need visible focus rings
+
+---
+
+## Component Installation (if project uses myoperator-ui)
+
+```bash
+npx myoperator-ui add button
+npx myoperator-ui add input
+npx myoperator-ui add select
+npx myoperator-ui add table
+npx myoperator-ui add dialog
+npx myoperator-ui add badge
+npx myoperator-ui add alert
+npx myoperator-ui add spinner
+npx myoperator-ui add pagination
+```
+
+Otherwise, generate standalone React + Tailwind code using the CSS variables defined above.

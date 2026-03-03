@@ -1,10 +1,10 @@
-# myOperator Plugins for Claude Code
+# myOperator Plugins
 
-AI skills for [Claude Code](https://claude.ai/code) that generate UI matching the myOperator design system.
+AI rules and skills for the myOperator design system — works with Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot, Aider, Continue, and more.
 
 ---
 
-## Install
+## Claude Code
 
 Two steps, both run inside a Claude Code session:
 
@@ -18,45 +18,20 @@ Two steps, both run inside a Claude Code session:
 /plugin install myoperator-design@myoperator-plugins
 ```
 
-> Step 1 is required before Step 2. It registers the source under the name `myoperator-plugins`. After that, you reference it as `@myoperator-plugins` for installs and updates.
+> Step 1 registers the source under the name `myoperator-plugins`. After that, reference it as `@myoperator-plugins` for installs and updates.
 
----
-
-## Usage
-
-Once installed, just describe what you want to build:
+Once installed, describe what you want to build or invoke directly with `/myoperator-design`:
 
 - *"Build a user management dashboard with myoperator design"*
 - *"Create a settings page using myoperator design system"*
 - *"Make a data table with filters and pagination"*
-- *"Build a form modal for adding a new agent"*
 
-Or invoke directly with `/myoperator-design`.
+**Update:**
+```
+/plugin update myoperator-design@myoperator-plugins
+```
 
-The skill generates **standalone React + Tailwind CSS** code — no package installation required, just copy and use.
-
----
-
-## What You Get
-
-The `myoperator-design` skill knows the full design system:
-
-| Token type | Examples |
-|------------|---------|
-| Colors | `--semantic-primary` (#343E55), `--semantic-brand` (#2BBCCA) |
-| States | error, warning, success, info — all with surface + text + border tokens |
-| Disabled | `--semantic-disabled-primary/secondary/text/border` |
-| Typography | Source Sans Pro, 9-step scale from display to label |
-| Components | Buttons, inputs, cards, badges, modals, tables, sidebars, alerts |
-
-All generated code uses CSS variables — never hardcoded colors.
-
----
-
-## Team Setup
-
-To share the plugin across your whole team without everyone running Step 1, add this to your project's `.claude/settings.json`:
-
+**Team setup** — add this to `.claude/settings.json` so teammates skip Step 1:
 ```json
 {
   "extraKnownMarketplaces": {
@@ -70,19 +45,97 @@ To share the plugin across your whole team without everyone running Step 1, add 
 }
 ```
 
-Then each developer only needs Step 2:
+---
 
+## Cursor
+
+```bash
+cp -r ai-rules/cursor/.cursor .cursor
+# or manually:
+mkdir -p .cursor/rules
+cp ai-rules/cursor/*.mdc .cursor/rules/
 ```
-/plugin install myoperator-design@myoperator-plugins
+
+Two rules are included:
+- `myoperator-tokens.mdc` — always applied, enforces color tokens
+- `myoperator-patterns.mdc` — applied when editing `.tsx`/`.jsx` files
+
+---
+
+## Windsurf
+
+```bash
+mkdir -p .windsurf/rules
+cp ai-rules/windsurf/*.md .windsurf/rules/
 ```
 
 ---
 
-## Update
+## GitHub Copilot
 
+```bash
+mkdir -p .github/instructions
+cp ai-rules/copilot/myoperator.instructions.md .github/instructions/
 ```
-/plugin update myoperator-design@myoperator-plugins
+
+---
+
+## Gemini CLI
+
+```bash
+# Project-level (recommended):
+cp ai-rules/gemini/GEMINI.md ./GEMINI.md
+
+# Global (applies to all your projects):
+cp ai-rules/gemini/GEMINI.md ~/.gemini/GEMINI.md
 ```
+
+---
+
+## Aider
+
+```bash
+cp ai-rules/aider/CONVENTIONS.md ./CONVENTIONS.md
+```
+
+Add to `.aider.conf.yml` for auto-load:
+```yaml
+read: CONVENTIONS.md
+```
+
+---
+
+## Continue.dev
+
+```bash
+mkdir -p .continue/rules
+cp ai-rules/continue/myoperator-rules.md .continue/rules/
+```
+
+---
+
+## Universal — AGENTS.md (works with 20+ tools)
+
+`AGENTS.md` is recognized by GitHub Copilot coding agent, Gemini CLI, OpenAI Codex, Cursor, Aider, Warp, Zed, Kilo Code, Devin, Factory, and more.
+
+```bash
+cp AGENTS.md ./AGENTS.md
+```
+
+**If you only copy one file, copy this one.**
+
+---
+
+## What the Rules Enforce
+
+| Rule | Why it matters |
+|------|---------------|
+| No hardcoded hex colors — use `--semantic-*` CSS variables | Design consistency, theme support |
+| Source Sans Pro font, weights 400/600/700 | Brand typography |
+| Modals use `z-[9999]`, never `z-50` | Host app navbar is at z-index 1000+ |
+| Turquoise (#2BBCCA) only for interactive elements | Not for charts/decoration |
+| Default body text = 16px | Correct type scale |
+| Enterprise SaaS aesthetic — no flashy animations | Design language consistency |
 
 ---
 
@@ -90,6 +143,6 @@ Then each developer only needs Step 2:
 
 | Plugin | Description |
 |--------|-------------|
-| `myoperator-design` | Generate UIs matching the myOperator design system |
+| `myoperator-design` | Claude Code skill — generates UIs matching the myOperator design system |
 
 More plugins coming soon.
