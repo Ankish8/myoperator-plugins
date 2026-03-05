@@ -688,3 +688,55 @@ import { Mail } from "lucide-react"
 **Type**: Multi-file component
 
 ---
+
+## UI Patterns
+
+Patterns for common UI constructs that don't have a dedicated library component.
+
+---
+
+### Tabs (Underline Style)
+
+> Underline-style tab navigation used for switching between views within a page section (e.g., "My Templates" / "Library").
+
+**No library component** — build inline with Tailwind.
+
+#### Rules
+- The underline MUST be scoped to the tab label width — **never** use `border-b` on a `block` or full-width container, as it will stretch to the container edge.
+- Active underline color: `border-semantic-primary` (same token as the primary button background `bg-semantic-primary` = `#343E55`).
+- Active tab text: `text-semantic-text-primary font-medium`
+- Inactive tab text: `text-semantic-text-muted hover:text-semantic-text-secondary`
+- Tab list: use `flex gap-6` (or similar gap) — do NOT add a full-width `border-b` on the container.
+
+#### Pattern
+
+```tsx
+// Correct: border-b is on the inline span, scoped to text width
+<div className="flex gap-6">
+  {tabs.map((tab) => (
+    <button
+      key={tab.id}
+      onClick={() => setActive(tab.id)}
+      className={cn(
+        "pb-2 text-sm transition-colors",
+        active === tab.id
+          ? "text-semantic-text-primary font-medium border-b-2 border-semantic-primary"
+          : "text-semantic-text-muted hover:text-semantic-text-secondary"
+      )}
+    >
+      {tab.label}
+    </button>
+  ))}
+</div>
+```
+
+#### Anti-pattern (DO NOT USE)
+
+```tsx
+// Wrong: border-b on the flex container stretches full width
+<div className="flex gap-6 border-b border-semantic-border-layout">
+  <button className="border-b-2 border-semantic-primary">Tab</button>
+</div>
+```
+
+---
