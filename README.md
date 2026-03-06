@@ -4,6 +4,17 @@ AI rules and skills for the myOperator design system — works with Claude Code,
 
 ---
 
+## Quick Install Matrix
+
+| I want... | Install this |
+|---|---|
+| Design generation skill in Claude Code | `/plugin install myoperator-design@myoperator-plugins` |
+| Component + publish workflows in Claude Code | `/plugin install myoperator-workflows@myoperator-plugins` |
+| Cursor rules only | `cp ai-rules/cursor/*.mdc .cursor/rules/` |
+| Cursor workflow commands only | `cp ai-rules/cursor/commands/*.md .cursor/commands/` |
+
+---
+
 ## Claude Code
 
 Two steps, both run inside a Claude Code session:
