@@ -5,7 +5,7 @@
     "email": "ankish@myoperator.co"
   },
   "metadata": {
-    "description": "Cursor plugins for the myOperator design system and delivery workflows"
+    "description": "Cursor plugins for the myOperator design system and developer workflows"
   },
   "plugins": [
     {
@@ -24,7 +24,7 @@
     {
       "name": "myoperator-cursor-workflows",
       "version": "1.0.0",
-      "description": "Cursor commands for myOperator component creation and release publishing workflows.",
+      "description": "Cursor dev workflow plugin for myOperator component creation and release publishing.",
       "author": {
         "name": "myOperator",
         "email": "ankish@myoperator.co"
@@ -32,7 +32,7 @@
       "source": "cursor-plugins/myoperator-cursor-workflows",
       "homepage": "https://github.com/Ankish8/myoperator-plugins",
       "category": "development",
-      "keywords": ["cursor", "commands", "workflows", "storybook", "publish", "myoperator"]
+      "keywords": ["cursor", "commands", "dev-workflow", "storybook", "publish", "myoperator"]
     }
   ]
 }

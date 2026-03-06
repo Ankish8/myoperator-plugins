@@ -1,14 +1,14 @@
 {
   "name": "myoperator-workflows",
   "version": "1.0.0",
-  "description": "Production workflows for myOperator component creation and release publishing",
+  "description": "Developer workflow plugin for myOperator component creation and release publishing",
   "author": {
     "name": "myOperator",
     "email": "ankish@myoperator.co"
   },
   "category": "development",
   "keywords": [
-    "workflows",
+    "dev-workflow",
     "component",
     "publish",
     "release",

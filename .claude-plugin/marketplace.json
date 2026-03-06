@@ -21,7 +21,7 @@
     {
       "name": "myoperator-workflows",
       "version": "1.0.0",
-      "description": "Operational workflows for myOperator teams: /create-component and /publish-all with production gates and release branching.",
+      "description": "Developer workflow plugin for myOperator teams: /create-component and /publish-all with production gates and release branching.",
       "author": {
         "name": "myOperator",
         "email": "ankish@myoperator.co"

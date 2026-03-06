@@ -1,11 +1,11 @@
 # myoperator-workflows
 
-Command plugin for myOperator delivery workflows.
+Command plugin for myOperator developer workflows.
 
 ## Commands
 
 - `/create-component` — screenshot-first + Figma-first component creation flow
-- `/publish-all` — pre-flight gated release workflow for beta/latest publishing
+- `/publish-all` — pre-flight gated dev release flow for beta/latest publishing
 
 ## Install
 
