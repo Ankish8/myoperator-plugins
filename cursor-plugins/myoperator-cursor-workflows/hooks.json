@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "./scripts/enforce-bootstrap-compat.sh \"$PWD\"",
+        "matcher": "git commit|git push|npm publish|npm version|pnpm publish|pnpm version|yarn publish|yarn version",
+        "timeout": 60
+      }
+    ]
+  }
+}

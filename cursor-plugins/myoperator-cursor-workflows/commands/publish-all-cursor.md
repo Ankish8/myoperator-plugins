@@ -20,9 +20,14 @@ npm test
 cd packages/cli && npm test
 npm run lint
 npm run api:check
+node scripts/check-bootstrap-compat.js
 ```
 
 If intentional API changes, run `npm run api:snapshot`.
+
+Bootstrap compatibility rule:
+- every component `<p>` must include `m-0`, `mb-0`, or `my-0`
+- the plugin hook blocks matching commit/push/publish/version commands when this scan fails
 
 ## 3) Storybook sync check
 

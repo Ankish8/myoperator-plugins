@@ -1,7 +1,7 @@
 {
   "name": "myoperator-cursor-workflows",
   "version": "1.0.0",
-  "description": "Cursor dev workflow plugin for myOperator component creation and publishing",
+  "description": "Cursor dev workflow plugin for myOperator component creation, publishing, and bootstrap compatibility enforcement",
   "author": {
     "name": "myOperator",
     "email": "ankish@myoperator.co"
@@ -9,5 +9,6 @@
   "homepage": "https://github.com/Ankish8/myoperator-plugins",
   "repository": "https://github.com/Ankish8/myoperator-plugins",
   "license": "MIT",
-  "keywords": ["cursor", "commands", "dev-workflow", "myoperator"]
+  "keywords": ["cursor", "commands", "dev-workflow", "bootstrap-compat", "myoperator"],
+  "hooks": "hooks.json"
 }

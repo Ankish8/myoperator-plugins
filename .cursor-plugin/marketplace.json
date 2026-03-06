@@ -24,7 +24,7 @@
     {
       "name": "myoperator-cursor-workflows",
       "version": "1.0.0",
-      "description": "Cursor dev workflow plugin for myOperator component creation and release publishing.",
+      "description": "Cursor dev workflow plugin for myOperator component creation, release publishing, and bootstrap compatibility enforcement.",
       "author": {
         "name": "myOperator",
         "email": "ankish@myoperator.co"
