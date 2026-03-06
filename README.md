@@ -10,8 +10,10 @@ AI rules and skills for the myOperator design system — works with Claude Code,
 |---|---|
 | Design generation skill in Claude Code | `/plugin install myoperator-design@myoperator-plugins` |
 | Component + publish workflows in Claude Code | `/plugin install myoperator-workflows@myoperator-plugins` |
-| Cursor rules only | `cp ai-rules/cursor/*.mdc .cursor/rules/` |
-| Cursor workflow commands only | `cp ai-rules/cursor/commands/*.md .cursor/commands/` |
+| Installable Cursor design plugin | `myoperator-cursor-design` from the Cursor Marketplace / team marketplace |
+| Installable Cursor workflow plugin | `myoperator-cursor-workflows` from the Cursor Marketplace / team marketplace |
+| Cursor manual fallback: rules only | `cp ai-rules/cursor/*.mdc .cursor/rules/` |
+| Cursor manual fallback: workflow commands only | `cp ai-rules/cursor/commands/*.md .cursor/commands/` |
 
 ---
 
@@ -75,6 +77,24 @@ Update:
 ---
 
 ## Cursor
+
+This repo now includes **proper installable Cursor plugins** in addition to the file-copy fallback.
+
+### Installable Cursor plugins
+
+The repository includes a Cursor marketplace manifest at:
+
+```text
+.cursor-plugin/marketplace.json
+```
+
+Included Cursor plugins:
+- `myoperator-cursor-design`
+- `myoperator-cursor-workflows`
+
+Use these when importing this repo into the **Cursor Marketplace** or a **Cursor Team Marketplace**.
+
+### Manual fallback
 
 ```bash
 cp -r ai-rules/cursor/.cursor .cursor
@@ -170,5 +190,7 @@ cp AGENTS.md ./AGENTS.md
 |--------|-------------|
 | `myoperator-design` | Claude Code skill — generates UIs matching the myOperator design system |
 | `myoperator-workflows` | Claude Code command plugin with `/create-component` and `/publish-all` workflows |
+| `myoperator-cursor-design` | Cursor plugin with installable myOperator design-system rules |
+| `myoperator-cursor-workflows` | Cursor plugin with installable component and publish workflow commands |
 
 More plugins coming soon.

@@ -1,0 +1,38 @@
+{
+  "name": "myoperator-cursor-plugins",
+  "owner": {
+    "name": "myOperator",
+    "email": "ankish@myoperator.co"
+  },
+  "metadata": {
+    "description": "Cursor plugins for the myOperator design system and delivery workflows"
+  },
+  "plugins": [
+    {
+      "name": "myoperator-cursor-design",
+      "version": "1.0.0",
+      "description": "Cursor rules for the myOperator design system: semantic tokens, typography, z-index, and UI patterns.",
+      "author": {
+        "name": "myOperator",
+        "email": "ankish@myoperator.co"
+      },
+      "source": "cursor-plugins/myoperator-cursor-design",
+      "homepage": "https://github.com/Ankish8/myoperator-plugins",
+      "category": "development",
+      "keywords": ["cursor", "rules", "design-system", "react", "tailwind", "myoperator"]
+    },
+    {
+      "name": "myoperator-cursor-workflows",
+      "version": "1.0.0",
+      "description": "Cursor commands for myOperator component creation and release publishing workflows.",
+      "author": {
+        "name": "myOperator",
+        "email": "ankish@myoperator.co"
+      },
+      "source": "cursor-plugins/myoperator-cursor-workflows",
+      "homepage": "https://github.com/Ankish8/myoperator-plugins",
+      "category": "development",
+      "keywords": ["cursor", "commands", "workflows", "storybook", "publish", "myoperator"]
+    }
+  ]
+}

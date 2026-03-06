@@ -12,6 +12,14 @@ Copy the folder for your AI tool into your project root.
 
 ### Cursor
 
+Preferred option: use the installable Cursor plugins defined in the repository's `.cursor-plugin/marketplace.json`.
+
+Available Cursor plugins:
+- `myoperator-cursor-design`
+- `myoperator-cursor-workflows`
+
+Manual fallback:
+
 Copy `.cursor/rules/` files into your project:
 
 ```bash
