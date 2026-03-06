@@ -1,0 +1,19 @@
+{
+  "name": "myoperator-workflows",
+  "version": "1.0.0",
+  "description": "Production workflows for myOperator component creation and release publishing",
+  "author": {
+    "name": "myOperator",
+    "email": "ankish@myoperator.co"
+  },
+  "category": "development",
+  "keywords": [
+    "workflows",
+    "component",
+    "publish",
+    "release",
+    "storybook",
+    "myoperator"
+  ],
+  "license": "MIT"
+}

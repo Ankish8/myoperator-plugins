@@ -17,6 +17,18 @@
       "source": "./plugins/myoperator-design",
       "category": "development",
       "homepage": "https://github.com/Ankish8/myoperator-plugins"
+    },
+    {
+      "name": "myoperator-workflows",
+      "version": "1.0.0",
+      "description": "Operational workflows for myOperator teams: /create-component and /publish-all with production gates and release branching.",
+      "author": {
+        "name": "myOperator",
+        "email": "ankish@myoperator.co"
+      },
+      "source": "./plugins/myoperator-workflows",
+      "category": "development",
+      "homepage": "https://github.com/Ankish8/myoperator-plugins"
     }
   ]
 }

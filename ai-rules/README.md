@@ -25,6 +25,17 @@ Two files are provided:
 
 Rules use Cursor's MDC frontmatter format with `alwaysApply` and `globs`.
 
+Optional Cursor command pack:
+
+```bash
+mkdir -p .cursor/commands
+cp ai-rules/cursor/commands/*.md .cursor/commands/
+```
+
+Included commands:
+- `create-component-cursor.md`
+- `publish-all-cursor.md`
+
 ---
 
 ### Windsurf

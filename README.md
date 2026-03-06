@@ -31,6 +31,22 @@ Once installed, describe what you want to build or invoke directly with `/myoper
 /plugin update myoperator-design@myoperator-plugins
 ```
 
+### Additional workflow plugin (component + release commands)
+
+Install:
+```bash
+/plugin install myoperator-workflows@myoperator-plugins
+```
+
+This adds:
+- `/create-component`
+- `/publish-all`
+
+Update:
+```bash
+/plugin update myoperator-workflows@myoperator-plugins
+```
+
 **Team setup** — add this to `.claude/settings.json` so teammates skip Step 1:
 ```json
 {
@@ -59,6 +75,17 @@ cp ai-rules/cursor/*.mdc .cursor/rules/
 Two rules are included:
 - `myoperator-tokens.mdc` — always applied, enforces color tokens
 - `myoperator-patterns.mdc` — applied when editing `.tsx`/`.jsx` files
+
+### Optional Cursor command pack (component + publish)
+
+```bash
+mkdir -p .cursor/commands
+cp ai-rules/cursor/commands/*.md .cursor/commands/
+```
+
+Includes:
+- `create-component-cursor.md`
+- `publish-all-cursor.md`
 
 ---
 
@@ -131,5 +158,6 @@ cp AGENTS.md ./AGENTS.md
 | Plugin | Description |
 |--------|-------------|
 | `myoperator-design` | Claude Code skill — generates UIs matching the myOperator design system |
+| `myoperator-workflows` | Claude Code command plugin with `/create-component` and `/publish-all` workflows |
 
 More plugins coming soon.
