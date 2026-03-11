@@ -29,6 +29,18 @@
       "source": "./plugins/myoperator-workflows",
       "category": "development",
       "homepage": "https://github.com/Ankish8/myoperator-plugins"
+    },
+    {
+      "name": "component-creator",
+      "version": "1.0.0",
+      "description": "Intelligent React component creation with design system validation, Figma integration, and automated testing.",
+      "author": {
+        "name": "myOperator",
+        "email": "ankish@myoperator.co"
+      },
+      "source": "./plugins/component-creator",
+      "category": "development",
+      "homepage": "https://github.com/Ankish8/myoperator-plugins"
     }
   ]
 }
