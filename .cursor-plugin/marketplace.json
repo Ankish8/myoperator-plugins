@@ -33,19 +33,6 @@
       "homepage": "https://github.com/Ankish8/myoperator-plugins",
       "category": "development",
       "keywords": ["cursor", "commands", "dev-workflow", "storybook", "publish", "myoperator"]
-    },
-    {
-      "name": "cursor-component-publish",
-      "version": "1.0.0",
-      "description": "Cursor commands for component creation and publishing workflows.",
-      "author": {
-        "name": "myOperator",
-        "email": "ankish@myoperator.co"
-      },
-      "source": "cursor-plugins/cursor-component-publish",
-      "homepage": "https://github.com/Ankish8/myoperator-plugins",
-      "category": "development",
-      "keywords": ["cursor", "commands", "components", "publish", "myoperator"]
     }
   ]
 }
