@@ -36,11 +36,22 @@ npx storybook build --test 2>&1 | tail -5
 
 ## Step 4A: Beta path
 
+### Publish CLI as Beta
 ```bash
 cd packages/cli && npm version prerelease --preid=beta --no-git-tag-version && npm run build && MYOPERATOR_PUBLISH_ALLOWED=1 npm publish --tag beta
 ```
 
-Then report published beta version and stop. Do not commit/push or publish MCP.
+### Git commit and push to beta branch (does NOT trigger Storybook deploy)
+```bash
+BETA_VERSION=$(cd packages/cli && node -p "require('./package.json').version")
+git checkout -B beta/cli
+git add .
+MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
+MYOPERATOR_GIT_ALLOWED=1 git push -u origin beta/cli --force
+git checkout main
+```
+
+Report published beta version, pushed branch, and stop. Do not publish MCP for beta.
 
 ## Step 4B: Latest path
 

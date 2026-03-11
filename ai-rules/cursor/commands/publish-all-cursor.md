@@ -4,7 +4,7 @@ Run production-safe release flow for myOperator UI.
 
 ## 1) Choose release type
 
-- **Beta**: publish CLI with beta tag, no commit/push, no MCP.
+- **Beta**: publish CLI with beta tag, commit/push to `beta/cli` branch, no MCP.
 - **Latest**: full CLI + MCP publish flow.
 
 ## 2) Pre-flight checks (required)
@@ -33,6 +33,18 @@ Update stories when component behavior/props/variants changed.
 ```bash
 cd packages/cli && npm version prerelease --preid=beta --no-git-tag-version && npm run build && MYOPERATOR_PUBLISH_ALLOWED=1 npm publish --tag beta
 ```
+
+Then commit and push to beta branch (does NOT trigger Storybook deploy):
+```bash
+BETA_VERSION=$(cd packages/cli && node -p "require('./package.json').version")
+git checkout -B beta/cli
+git add .
+MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
+MYOPERATOR_GIT_ALLOWED=1 git push -u origin beta/cli --force
+git checkout main
+```
+
+Report published beta version, pushed branch, and stop. Do not publish MCP for beta.
 
 ### Latest
 ```bash
