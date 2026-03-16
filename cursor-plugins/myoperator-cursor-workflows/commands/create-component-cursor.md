@@ -1,6 +1,6 @@
 ---
-description: "[Cursor] Create a new React component with interactive guided workflow — uses Cursor's AskQuestion tool for all prompts"
-argument-hint: Optional screenshot path
+name: create-component-cursor
+description: Create a new React component with an interactive guided workflow using screenshots and Figma.
 ---
 
 # Create Component Workflow (Cursor Edition)

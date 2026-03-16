@@ -1,6 +1,6 @@
 ---
-description: "[Cursor] Full publish workflow for myOperator UI (beta/latest) with pre-flight checks, Storybook sync, and conditional publish paths"
-argument-hint: Optional release type (beta|latest)
+name: publish-all-cursor
+description: Full publish workflow for myOperator UI (beta or latest) with pre-flight checks, Storybook sync, and conditional publish paths.
 ---
 
 # Full Publish Workflow (Cursor Edition)
