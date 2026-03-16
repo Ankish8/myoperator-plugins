@@ -10,5 +10,7 @@
   "repository": "https://github.com/Ankish8/myoperator-plugins",
   "license": "MIT",
   "keywords": ["cursor", "commands", "dev-workflow", "bootstrap-compat", "myoperator"],
-  "hooks": "hooks.json"
+  "hooks": "hooks.json",
+  "commands": "commands/",
+  "rules": "rules/"
 }
