@@ -45,7 +45,14 @@ AskQuestion({
 
 Run ALL of these. If any fail, STOP and fix before proceeding.
 
-### 2.1 Component tests
+### 2.1 Component tests (smart — only changed)
+```bash
+npm run test:smart
+```
+
+This only tests components whose source or test files changed since the last passing run. Cache is stored in `.test-cache.json`. Use `npm run test:smart -- --all` to force-test everything, or `npm run test:smart -- --clear` to reset the cache.
+
+If `test:smart` script is not available, fall back to:
 ```bash
 npm test
 ```
@@ -55,19 +62,26 @@ npm test
 cd packages/cli && npm test
 ```
 
-### 2.3 Linting
+### 2.3 CLI E2E tests
 ```bash
-cd /Users/ankish/Downloads/Code/storybook-npm && npm run lint
+cd packages/cli && npm run test:e2e
 ```
 
-### 2.4 API breaking change check
+Runs full end-to-end verification: installs components into a temp project, checks `tw-` prefixing, import paths, Bootstrap compat, and runs a Vite build.
+
+### 2.4 Linting
+```bash
+npm run lint
+```
+
+### 2.5 API breaking change check
 ```bash
 npm run api:check
 ```
 
 If `api:check` reports intentional breaking changes, run `npm run api:snapshot` to update the baseline, then continue.
 
-### 2.5 Bootstrap compat check
+### 2.6 Bootstrap compat check
 ```bash
 node scripts/check-bootstrap-compat.js
 ```
@@ -76,7 +90,7 @@ Ensures all `<p>` elements in component files have `m-0` (or `mb-0`/`my-0`). Boo
 
 **Cursor enforcement:** project hooks also block matching `git commit`, `git push`, `npm publish`, and `npm version` shell commands when this check fails, so the check is no longer only documentation.
 
-**IMPORTANT: All checks (2.1–2.5) MUST pass. Do NOT skip or proceed if any fail.**
+**IMPORTANT: All checks (2.1–2.6) MUST pass. Do NOT skip or proceed if any fail.**
 
 ---
 
@@ -132,6 +146,8 @@ git add .
 MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
 MYOPERATOR_GIT_ALLOWED=1 git push
 ```
+
+**NOTE: Commits all changes on the current branch.** Does NOT checkout or create a separate branch.
 
 #### 4c. Report and STOP
 
@@ -205,7 +221,7 @@ Report after finishing:
 
 | Release Type | Who gets it | Commits? | MCP? | Storybook deploy? |
 |---|---|---|---|---|
-| Beta | Only @beta users | Yes (`beta/cli` branch) | No | No |
+| Beta | Only @beta users | Yes (current branch) | No | No |
 | Latest | Everyone | Yes | Yes | Yes (via push) |
 
 ## Important Notes
