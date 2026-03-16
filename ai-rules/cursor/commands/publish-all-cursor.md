@@ -128,7 +128,7 @@ cd packages/cli && npm version prerelease --preid=beta --no-git-tag-version && n
 #### 4b. Git Commit and Push (stays on current branch)
 ```bash
 BETA_VERSION=$(cd packages/cli && node -p "require('./package.json').version")
-git add packages/cli/package.json packages/cli/src/registry/ packages/cli/dist/
+git add .
 MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
 MYOPERATOR_GIT_ALLOWED=1 git push
 ```

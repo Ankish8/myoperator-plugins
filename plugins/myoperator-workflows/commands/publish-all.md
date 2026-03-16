@@ -108,12 +108,12 @@ cd packages/cli && npm version prerelease --preid=beta --no-git-tag-version && n
 #### 4b. Git Commit and Push (stays on current branch)
 ```bash
 BETA_VERSION=$(cd packages/cli && node -p "require('./package.json').version")
-git add packages/cli/package.json packages/cli/src/registry/ packages/cli/dist/
+git add .
 MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
 MYOPERATOR_GIT_ALLOWED=1 git push
 ```
 
-**NOTE: This commits only the publish artifacts on the current branch.** It does NOT checkout or create a separate branch — your in-progress work stays untouched.
+**NOTE: Commits all changes on the current branch.** Does NOT checkout or create a separate branch.
 
 #### 4c. Report and STOP
 
