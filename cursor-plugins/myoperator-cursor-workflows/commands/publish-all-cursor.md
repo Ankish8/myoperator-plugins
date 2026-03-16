@@ -45,14 +45,12 @@ Update stories when component behavior, props, or variants changed.
 cd packages/cli && npm version prerelease --preid=beta --no-git-tag-version && npm run build && MYOPERATOR_PUBLISH_ALLOWED=1 npm publish --tag beta
 ```
 
-Then commit and push to beta branch (does NOT trigger Storybook deploy):
+Then commit and push (stays on current branch):
 ```bash
 BETA_VERSION=$(cd packages/cli && node -p "require('./package.json').version")
-git checkout -B beta/cli
-git add .
+git add packages/cli/package.json packages/cli/src/registry/ packages/cli/dist/
 MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
-MYOPERATOR_GIT_ALLOWED=1 git push -u origin beta/cli --force
-git checkout main
+MYOPERATOR_GIT_ALLOWED=1 git push
 ```
 
 Report published beta version, pushed branch, and stop. Do not publish MCP for beta.

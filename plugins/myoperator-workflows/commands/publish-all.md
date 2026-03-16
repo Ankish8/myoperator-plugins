@@ -105,22 +105,21 @@ Fix any build failures before proceeding.
 cd packages/cli && npm version prerelease --preid=beta --no-git-tag-version && npm run build && MYOPERATOR_PUBLISH_ALLOWED=1 npm publish --tag beta
 ```
 
-#### 4b. Git Commit and Push to beta branch (does NOT trigger Storybook deploy)
+#### 4b. Git Commit and Push (stays on current branch)
 ```bash
 BETA_VERSION=$(cd packages/cli && node -p "require('./package.json').version")
-git checkout -B beta/cli
-git add .
+git add packages/cli/package.json packages/cli/src/registry/ packages/cli/dist/
 MYOPERATOR_GIT_ALLOWED=1 git commit -m "chore: publish myoperator-ui v${BETA_VERSION} (beta)"
-MYOPERATOR_GIT_ALLOWED=1 git push -u origin beta/cli --force
+MYOPERATOR_GIT_ALLOWED=1 git push
 ```
 
-**NOTE: You will stay on the `beta/cli` branch after this.** This is intentional — other developers can pull this branch to get the full code. When you're ready to go to production, run `/publish-all` and choose 'Latest'.
+**NOTE: This commits only the publish artifacts on the current branch.** It does NOT checkout or create a separate branch — your in-progress work stays untouched.
 
 #### 4c. Report and STOP
 
 Report to user:
 - "Published CLI as beta: myoperator-ui@X.X.X-beta.X"
-- "Pushed to branch: `beta/cli`"
+- "Committed and pushed on current branch"
 - "Test with: `npx myoperator-ui@beta add <component>`"
 - "When ready for production, run `/publish-all` and choose 'Latest'"
 - "Promote manually: `npm dist-tag add myoperator-ui@X.X.X-beta.X latest`"
