@@ -1,12 +1,19 @@
 {
   "name": "myoperator-design",
-  "version": "1.0.0",
-  "description": "Create UIs matching the myOperator design system aesthetic. Generates standalone React/HTML/CSS code with consistent visual language.",
+  "version": "2.0.0",
+  "description": "Design screens that match production myOperator UI exactly. Every core myoperator-ui component (45) as verified markup with verbatim Tailwind classes, the full token set, page patterns, and a single-file HTML starter.",
   "author": {
     "name": "myOperator",
     "email": "ankish@myoperator.co"
   },
-  "category": "development",
-  "keywords": ["design-system", "ui", "react", "tailwind", "myoperator"],
+  "keywords": [
+    "design-system",
+    "ui",
+    "react",
+    "tailwind",
+    "myoperator",
+    "prototype",
+    "mockup"
+  ],
   "license": "MIT"
 }

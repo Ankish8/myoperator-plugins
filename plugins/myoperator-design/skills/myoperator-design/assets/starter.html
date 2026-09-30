@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>myOperator — Screen name</title>
+
+  <!-- ═══ myOperator design system setup — copy this whole <head> block verbatim ═══ -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    var S = "primary primary-hover primary-selected primary-selected-hover primary-highlighted primary-surface brand brand-hover brand-selected brand-selected-hover brand-highlighted brand-surface brand-text bg-primary bg-secondary bg-ui bg-canvas bg-subtle bg-grey bg-grey-hover bg-inverted bg-hover text-primary text-secondary text-placeholder text-link text-inverted text-muted border-primary border-secondary border-accent border-layout border-input border-input-focus border-focus disabled-primary disabled-secondary disabled-text disabled-border error-primary error-surface-subtle error-surface error-text error-border error-hover warning-primary warning-surface-subtle warning-surface warning-text warning-border warning-hover success-primary success-surface-subtle success-surface success-text success-border success-hover info-primary info-surface-subtle info-surface info-text info-border info-hover".split(" ");
+    var semantic = {};
+    S.forEach(function (n) { semantic["semantic-" + n] = "var(--semantic-" + n + ")"; });
+    tailwind.config = {
+      darkMode: ["class"],
+      theme: {
+        container: {"center":true,"padding":"2rem","screens":{"2xl":"1400px"}},
+        extend: Object.assign({
+          "fontFamily": {
+            "sans": ["Source Sans Pro", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+          },
+          "borderRadius": {"lg":"var(--radius)","md":"calc(var(--radius) - 2px)","sm":"calc(var(--radius) - 4px)"},
+          "lineHeight": {
+            "none": "var(--line-height-none)",
+            "tight": "var(--line-height-tight)",
+            "snug": "var(--line-height-snug)",
+            "normal": "var(--line-height-normal)",
+            "relaxed": "var(--line-height-relaxed)",
+            "loose": "var(--line-height-loose)"
+          },
+          "boxShadow": {
+            "xs": "var(--shadow-xs)",
+            "sm": "var(--shadow-sm)",
+            "md": "var(--shadow-md)",
+            "lg": "var(--shadow-lg)",
+            "xl": "var(--shadow-xl)",
+            "2xl": "var(--shadow-2xl)"
+          },
+          "keyframes": {
+            "accordion-down": {"from":{"height":"0"},"to":{"height":"var(--radix-accordion-content-height)"}},
+            "accordion-up": {"from":{"height":"var(--radix-accordion-content-height)"},"to":{"height":"0"}}
+          },
+          "animation": {"accordion-down":"accordion-down 0.2s ease-out","accordion-up":"accordion-up 0.2s ease-out"}
+        }, {
+          colors: Object.assign({
+            "border": "hsl(var(--border))",
+            "input": "hsl(var(--input))",
+            "ring": "hsl(var(--ring))",
+            "background": "hsl(var(--background))",
+            "foreground": "hsl(var(--foreground))",
+            "primary": {"DEFAULT":"hsl(var(--primary))","foreground":"hsl(var(--primary-foreground))"},
+            "secondary": {"DEFAULT":"hsl(var(--secondary))","foreground":"hsl(var(--secondary-foreground))"},
+            "destructive": {"DEFAULT":"hsl(var(--destructive))","foreground":"hsl(var(--destructive-foreground))"},
+            "muted": {"DEFAULT":"hsl(var(--muted))","foreground":"hsl(var(--muted-foreground))"},
+            "accent": {"DEFAULT":"hsl(var(--accent))","foreground":"hsl(var(--accent-foreground))"},
+            "popover": {"DEFAULT":"hsl(var(--popover))","foreground":"hsl(var(--popover-foreground))"},
+            "card": {"DEFAULT":"hsl(var(--card))","foreground":"hsl(var(--card-foreground))"}
+          }, semantic)
+        })
+      }
+    };
+    tailwind.config.plugins = [{
+      handler: function (api) {
+        var addUtilities = api.addUtilities, matchUtilities = api.matchUtilities, theme = api.theme;
+        var noDefault = function (v) { var o = {}; Object.keys(v).forEach(function (k) { if (k !== "DEFAULT") o[k] = v[k]; }); return o; };
+        addUtilities({
+          "@keyframes enter": theme("keyframes.enter"),
+          "@keyframes exit": theme("keyframes.exit"),
+          ".animate-in": { animationName: "enter", animationDuration: theme("animationDuration.DEFAULT"), "--tw-enter-opacity": "initial", "--tw-enter-scale": "initial", "--tw-enter-rotate": "initial", "--tw-enter-translate-x": "initial", "--tw-enter-translate-y": "initial" },
+          ".animate-out": { animationName: "exit", animationDuration: theme("animationDuration.DEFAULT"), "--tw-exit-opacity": "initial", "--tw-exit-scale": "initial", "--tw-exit-rotate": "initial", "--tw-exit-translate-x": "initial", "--tw-exit-translate-y": "initial" }
+        });
+        matchUtilities({ "fade-in": function (v) { return { "--tw-enter-opacity": v }; }, "fade-out": function (v) { return { "--tw-exit-opacity": v }; } }, { values: theme("animationOpacity") });
+        matchUtilities({ "zoom-in": function (v) { return { "--tw-enter-scale": v }; }, "zoom-out": function (v) { return { "--tw-exit-scale": v }; } }, { values: theme("animationScale") });
+        matchUtilities({
+          "slide-in-from-top": function (v) { return { "--tw-enter-translate-y": "-" + v }; },
+          "slide-in-from-bottom": function (v) { return { "--tw-enter-translate-y": v }; },
+          "slide-in-from-left": function (v) { return { "--tw-enter-translate-x": "-" + v }; },
+          "slide-in-from-right": function (v) { return { "--tw-enter-translate-x": v }; },
+          "slide-out-to-top": function (v) { return { "--tw-exit-translate-y": "-" + v }; },
+          "slide-out-to-bottom": function (v) { return { "--tw-exit-translate-y": v }; },
+          "slide-out-to-left": function (v) { return { "--tw-exit-translate-x": "-" + v }; },
+          "slide-out-to-right": function (v) { return { "--tw-exit-translate-x": v }; }
+        }, { values: theme("animationTranslate") });
+        matchUtilities({ duration: function (v) { return { animationDuration: v }; } }, { values: noDefault(theme("animationDuration")) });
+      },
+      config: { theme: { extend: {
+        animationDuration: function (h) { return Object.assign({ 0: "0ms" }, h.theme("transitionDuration")); },
+        animationOpacity: function (h) { return Object.assign({ DEFAULT: 0 }, h.theme("opacity")); },
+        animationTranslate: function (h) { return Object.assign({ DEFAULT: "100%" }, h.theme("translate")); },
+        animationScale: function (h) { return Object.assign({ DEFAULT: 0 }, h.theme("scale")); },
+        keyframes: {
+          enter: { from: { opacity: "var(--tw-enter-opacity, 1)", transform: "translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1)) rotate(var(--tw-enter-rotate, 0))" } },
+          exit: { to: { opacity: "var(--tw-exit-opacity, 1)", transform: "translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0))" } }
+        }
+      } } }
+    }];
+  </script>
+  <style type="text/tailwindcss">
+    @layer base {
+      :root {
+        --color-white: #FFFFFF;
+        --color-black: #000000;
+        --color-neutral-25: #FDFDFD; --color-neutral-50: #FAFAFA; --color-neutral-100: #F5F5F5; --color-neutral-200: #E9EAEB; --color-neutral-300: #D5D7DA; --color-neutral-400: #A4A7AE; --color-neutral-500: #717680; --color-neutral-600: #535862; --color-neutral-700: #414651; --color-neutral-800: #252B37; --color-neutral-900: #181D27; --color-neutral-950: #0A0D12;
+        --color-slate-100: #F1F5F9;
+        --color-primary-25: #F9FAFB; --color-primary-50: #EBECEE; --color-primary-100: #C0C3CA; --color-primary-200: #A2A6B1; --color-primary-300: #777E8D; --color-primary-400: #5D6577; --color-primary-500: #343E55; --color-primary-600: #2F384D; --color-primary-700: #252C3C; --color-primary-800: #1D222F; --color-primary-900: #161A24; --color-primary-950: #0C0F12;
+        --color-secondary-25: #F6FCFD; --color-secondary-50: #EAF8FA; --color-secondary-100: #BDEAEF; --color-secondary-200: #9DE0E7; --color-secondary-300: #71D2DB; --color-secondary-400: #55C9D5; --color-secondary-500: #2BBCCA; --color-secondary-600: #27ABB8; --color-secondary-700: #1F858F; --color-secondary-800: #18676F; --color-secondary-900: #124F55; --color-secondary-950: #0F3D3D;
+        --color-error-25: #FFFBFA; --color-error-50: #FEF3F2; --color-error-100: #FEE4E2; --color-error-200: #FECDCA; --color-error-300: #FDA29B; --color-error-400: #F97066; --color-error-500: #F04438; --color-error-600: #D92D20; --color-error-700: #B42318; --color-error-800: #912018; --color-error-900: #7A271A; --color-error-950: #55160C;
+        --color-warning-25: #FFFCF5; --color-warning-50: #FFFAEB; --color-warning-100: #FEF0C7; --color-warning-200: #FEDF89; --color-warning-300: #FEC84B; --color-warning-400: #FDB022; --color-warning-500: #F79009; --color-warning-600: #DC6803; --color-warning-700: #B54708; --color-warning-800: #93370D; --color-warning-900: #7A2E0E; --color-warning-950: #4E1D09;
+        --color-success-25: #F6FEF9; --color-success-50: #ECFDF3; --color-success-100: #DCFAE6; --color-success-200: #ABEFC6; --color-success-300: #75E0A7; --color-success-400: #47CD89; --color-success-500: #17B26A; --color-success-600: #079455; --color-success-700: #067647; --color-success-800: #085D3A; --color-success-900: #074D31; --color-success-950: #053321;
+        --color-info-25: #F6F8FD; --color-info-50: #ECF1FB; --color-info-100: #C4D4F2; --color-info-200: #A8C0EC; --color-info-300: #80A3E4; --color-info-400: #6891DE; --color-info-500: #4275D6; --color-info-600: #3C6AC3; --color-info-700: #2F5398; --color-info-800: #244076; --color-info-900: #1C315A; --color-info-950: #182A44;
+        --semantic-primary: var(--color-primary-500);
+        --semantic-primary-hover: var(--color-primary-600);
+        --semantic-primary-selected: var(--color-primary-300);
+        --semantic-primary-selected-hover: var(--color-primary-400);
+        --semantic-primary-highlighted: var(--color-primary-700);
+        --semantic-primary-surface: var(--color-primary-50);
+        --semantic-brand: var(--color-secondary-500);
+        --semantic-brand-hover: var(--color-secondary-700);
+        --semantic-brand-selected: var(--color-secondary-300);
+        --semantic-brand-selected-hover: var(--color-secondary-600);
+        --semantic-brand-highlighted: var(--color-secondary-600);
+        --semantic-brand-surface: var(--color-secondary-50);
+        --semantic-brand-text: var(--color-secondary-800);
+        --semantic-bg-primary: var(--color-white);
+        --semantic-bg-secondary: var(--color-primary-950);
+        --semantic-bg-ui: var(--color-neutral-100);
+        --semantic-bg-canvas: var(--color-slate-100);
+        --semantic-bg-subtle: var(--color-neutral-50);
+        --semantic-bg-grey: var(--color-neutral-200);
+        --semantic-bg-grey-hover: var(--color-neutral-400);
+        --semantic-bg-inverted: var(--color-black);
+        --semantic-bg-hover: var(--color-neutral-100);
+        --semantic-text-primary: var(--color-neutral-900);
+        --semantic-text-secondary: var(--color-primary-500);
+        --semantic-text-placeholder: var(--color-primary-200);
+        --semantic-text-link: var(--color-info-500);
+        --semantic-text-inverted: var(--color-white);
+        --semantic-text-muted: var(--color-neutral-500);
+        --semantic-border-primary: var(--color-primary-500);
+        --semantic-border-secondary: var(--color-primary-300);
+        --semantic-border-accent: var(--color-secondary-600);
+        --semantic-border-layout: var(--color-neutral-200);
+        --semantic-border-input: var(--color-neutral-200);
+        --semantic-border-input-focus: var(--color-secondary-500);
+        --semantic-border-focus: var(--color-secondary-500);
+        --semantic-disabled-primary: var(--color-primary-200);
+        --semantic-disabled-secondary: var(--color-primary-50);
+        --semantic-disabled-text: var(--color-neutral-500);
+        --semantic-disabled-border: var(--color-neutral-300);
+        --semantic-error-primary: var(--color-error-500);
+        --semantic-error-surface-subtle: var(--color-error-25);
+        --semantic-error-surface: var(--color-error-50);
+        --semantic-error-text: var(--color-error-700);
+        --semantic-error-border: var(--color-error-300);
+        --semantic-error-hover: var(--color-error-600);
+        --semantic-warning-primary: var(--color-warning-500);
+        --semantic-warning-surface-subtle: var(--color-warning-25);
+        --semantic-warning-surface: var(--color-warning-50);
+        --semantic-warning-text: var(--color-warning-700);
+        --semantic-warning-border: var(--color-warning-300);
+        --semantic-warning-hover: var(--color-warning-600);
+        --semantic-success-primary: var(--color-success-500);
+        --semantic-success-surface-subtle: var(--color-success-25);
+        --semantic-success-surface: var(--color-success-50);
+        --semantic-success-text: var(--color-success-700);
+        --semantic-success-border: var(--color-success-300);
+        --semantic-success-hover: var(--color-success-600);
+        --semantic-info-primary: var(--color-info-500);
+        --semantic-info-surface-subtle: var(--color-info-25);
+        --semantic-info-surface: var(--color-info-50);
+        --semantic-info-text: var(--color-info-700);
+        --semantic-info-border: var(--color-info-200);
+        --semantic-info-hover: var(--color-info-600);
+        --line-height-none: 1;
+        --line-height-tight: 1.25;
+        --line-height-snug: 1.375;
+        --line-height-normal: 1.5;
+        --line-height-relaxed: 1.625;
+        --line-height-loose: 2;
+        --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        --shadow-sm: 0px 1px 3px 0px rgba(16, 24, 40, 0.10), 0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+        --shadow-md: 0px 4px 8px -2px rgba(16, 24, 40, 0.10), 0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+        --shadow-lg: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+        --shadow-xl: 0px 20px 24px -4px rgba(16, 24, 40, 0.08), 0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+        --shadow-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+        --background: 0 0% 100%;
+        --foreground: 220 20% 12%;
+        --card: 0 0% 100%;
+        --card-foreground: 220 20% 12%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 20% 12%;
+        --primary: 222 26% 27%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 183 64% 46%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 220 9% 46%;
+        --accent: 183 64% 46%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 4 89% 58%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 220 13% 91%;
+        --input: 220 13% 91%;
+        --ring: 222 26% 27%;
+        --radius: 0.5rem;
+      }
+      .dark {
+        --background: 222 47% 5%;
+        --foreground: 210 40% 98%;
+        --card: 222 47% 5%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222 47% 5%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 210 40% 98%;
+        --primary-foreground: 222 47% 11%;
+        --secondary: 217 33% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217 33% 17.5%;
+        --muted-foreground: 215 20% 65%;
+        --accent: 217 33% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 63% 31%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217 33% 17.5%;
+        --input: 217 33% 17.5%;
+        --ring: 213 27% 84%;
+      }
+    }
+    @layer base {
+      * {
+        @apply border-border;
+      }
+      body {
+        @apply bg-background text-foreground;
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    }
+
+    /* Unchecked Radix-style checkboxes keep their indicator in the DOM for toggling. */
+    @layer base {
+      button[role="checkbox"][data-state="unchecked"] > span { display: none; }
+      [role="option"][data-state="unchecked"] [data-indicator],
+      [role="menuitemcheckbox"][aria-checked="false"] [data-indicator],
+      [role="menuitemradio"][aria-checked="false"] [data-indicator] { display: none; }
+      [data-tooltip-content][hidden] { display: none !important; }
+      [data-popover-content][hidden], [data-dialog][hidden] { display: none !important; }
+    }
+  </style>
+  <!-- ═══ end setup ═══ -->
+</head>
+<body>
+  <!-- SCREEN CONTENT GOES HERE -->
+
+  <!-- ═══ icons + behaviours — keep at the end of <body> ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.554.0/dist/umd/lucide.min.js"></script>
+  <script>
+    /* myOperator behaviours: makes the static component markup interactive.
+       Driven by the same role / data-state attributes the real components render,
+       so snippets from the reference files work without extra wiring. */
+    (function () {
+      if (window.lucide) window.lucide.createIcons();
+    
+      var all = function (root, sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); };
+      var setState = function (el, s) { el.setAttribute("data-state", s); };
+      var isOff = function (el) { return el.disabled || el.getAttribute("aria-disabled") === "true" || el.hasAttribute("data-disabled"); };
+    
+      function setPopover(p, open) {
+        var content = p.querySelector("[data-popover-content]");
+        var trigger = p.querySelector("[data-popover-trigger]");
+        if (!content) return;
+        if (open) content.removeAttribute("hidden"); else content.setAttribute("hidden", "");
+        setState(content, open ? "open" : "closed");
+        if (trigger) { setState(trigger, open ? "open" : "closed"); trigger.setAttribute("aria-expanded", String(open)); }
+      }
+      function closePopovers(except) {
+        all(document, "[data-popover]").forEach(function (p) { if (p !== except) setPopover(p, false); });
+      }
+      function setAccordionItem(trigger, open) {
+        var content = trigger.nextElementSibling;
+        trigger.setAttribute("aria-expanded", String(open));
+        setState(trigger.parentElement, open ? "open" : "closed");
+        var chevron = trigger.querySelector("svg:last-child");
+        if (chevron) chevron.classList.toggle("rotate-180", open);
+        if (content) {
+          content.style.height = open ? content.scrollHeight + "px" : "0px";
+          content.setAttribute("aria-hidden", String(!open));
+        }
+      }
+    
+      document.addEventListener("click", function (e) {
+        var t = e.target;
+    
+        var sw = t.closest('[role="switch"]');
+        if (sw) {
+          if (isOff(sw)) return;
+          var on = sw.getAttribute("data-state") !== "checked";
+          [sw].concat(all(sw, "[data-state]")).forEach(function (el) { setState(el, on ? "checked" : "unchecked"); });
+          sw.setAttribute("aria-checked", String(on));
+          return;
+        }
+    
+        var cb = t.closest('[role="checkbox"]');
+        if (cb && !cb.closest("[data-popover-content] [role='option']")) {
+          if (isOff(cb)) return;
+          var checked = cb.getAttribute("data-state") !== "checked";
+          [cb].concat(all(cb, "[data-state]")).forEach(function (el) { setState(el, checked ? "checked" : "unchecked"); });
+          cb.setAttribute("aria-checked", String(checked));
+          return;
+        }
+    
+        var tab = t.closest('[role="tab"]');
+        if (tab) {
+          if (isOff(tab)) return;
+          var list = tab.closest('[role="tablist"]');
+          var root = tab.closest("[data-tabs]") || list.parentElement;
+          all(list, '[role="tab"]').forEach(function (x) {
+            setState(x, x === tab ? "active" : "inactive");
+            x.setAttribute("aria-selected", String(x === tab));
+          });
+          all(root, '[role="tabpanel"]').forEach(function (panel) {
+            var active = panel.getAttribute("data-value") === tab.getAttribute("data-value");
+            setState(panel, active ? "active" : "inactive");
+            if (active) panel.removeAttribute("hidden"); else panel.setAttribute("hidden", "");
+          });
+          return;
+        }
+    
+        var acc = t.closest("[data-accordion] button[aria-expanded]");
+        if (acc) {
+          if (isOff(acc)) return;
+          var open = acc.getAttribute("aria-expanded") !== "true";
+          var accRoot = acc.closest("[data-accordion]");
+          if (open && accRoot.getAttribute("data-accordion") === "single") {
+            all(accRoot, "button[aria-expanded='true']").forEach(function (b) { setAccordionItem(b, false); });
+          }
+          setAccordionItem(acc, open);
+          return;
+        }
+    
+        var opener = t.closest("[data-dialog-open]");
+        if (opener) {
+          var dlg = document.querySelector(opener.getAttribute("data-dialog-open"));
+          if (dlg) dlg.removeAttribute("hidden");
+          return;
+        }
+        var closer = t.closest("[data-dialog-close]");
+        if (closer) {
+          var d = closer.closest("[data-dialog]");
+          if (d) d.setAttribute("hidden", "");
+          return;
+        }
+    
+        var trig = t.closest("[data-popover-trigger]");
+        if (trig) {
+          if (isOff(trig)) return;
+          var pop = trig.closest("[data-popover]");
+          var content = pop.querySelector("[data-popover-content]");
+          closePopovers(pop);
+          setPopover(pop, content.hasAttribute("hidden"));
+          return;
+        }
+    
+        var opt = t.closest("[data-popover-content] [role='option']");
+        if (opt) {
+          if (isOff(opt)) return;
+          var p = opt.closest("[data-popover]");
+          var multiple = p.getAttribute("data-popover") === "multiple";
+          if (!multiple) {
+            all(p, "[role='option']").forEach(function (o) { setState(o, "unchecked"); o.setAttribute("aria-selected", "false"); });
+          }
+          var sel = multiple ? opt.getAttribute("data-state") !== "checked" : true;
+          setState(opt, sel ? "checked" : "unchecked");
+          opt.setAttribute("aria-selected", String(sel));
+          all(opt, "[role='checkbox']").forEach(function (box) { setState(box, sel ? "checked" : "unchecked"); });
+          var label = p.querySelector("[data-popover-trigger] [data-value]");
+          if (label && !multiple) {
+            label.textContent = (opt.querySelector("[data-label]") || opt).textContent.trim();
+            label.removeAttribute("data-placeholder");
+          }
+          if (!multiple) setPopover(p, false);
+          return;
+        }
+    
+        var mcb = t.closest('[role="menuitemcheckbox"]');
+        if (mcb) {
+          if (isOff(mcb)) return;
+          var on2 = mcb.getAttribute("aria-checked") !== "true";
+          mcb.setAttribute("aria-checked", String(on2));
+          setState(mcb, on2 ? "checked" : "unchecked");
+          return;
+        }
+        var mradio = t.closest('[role="menuitemradio"]');
+        if (mradio) {
+          if (isOff(mradio)) return;
+          all(mradio.closest('[role="group"]') || mradio.parentElement, '[role="menuitemradio"]').forEach(function (r) {
+            r.setAttribute("aria-checked", String(r === mradio));
+            setState(r, r === mradio ? "checked" : "unchecked");
+          });
+          return;
+        }
+        var mitem = t.closest("[data-popover-content] [role='menuitem']");
+        if (mitem && !mitem.hasAttribute("aria-expanded")) {
+          if (isOff(mitem)) return;
+          setPopover(mitem.closest("[data-popover]"), false);
+          return;
+        }
+    
+        var dismiss = t.closest("[data-dismiss]");
+        if (dismiss) {
+          var target = dismiss.closest(dismiss.getAttribute("data-dismiss"));
+          if (target) target.remove();
+          return;
+        }
+    
+        if (!t.closest("[data-popover]")) closePopovers();
+      });
+    
+      function tip(e, show) {
+        var w = e.target.closest && e.target.closest("[data-tooltip]");
+        if (!w || (e.relatedTarget && w.contains(e.relatedTarget))) return;
+        var c = w.querySelector("[data-tooltip-content]");
+        if (c) { if (show) c.removeAttribute("hidden"); else c.setAttribute("hidden", ""); }
+      }
+      document.addEventListener("mouseover", function (e) { tip(e, true); });
+      document.addEventListener("mouseout", function (e) { tip(e, false); });
+      document.addEventListener("focusin", function (e) { tip(e, true); });
+      document.addEventListener("focusout", function (e) { tip(e, false); });
+    
+      document.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape") return;
+        closePopovers();
+        all(document, "[data-dialog]").forEach(function (d) { d.setAttribute("hidden", ""); });
+      });
+    })();
+  </script>
+</body>
+</html>
