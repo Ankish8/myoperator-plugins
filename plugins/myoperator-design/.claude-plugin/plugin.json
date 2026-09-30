@@ -1,6 +1,6 @@
 {
   "name": "myoperator-design",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Design screens that match production myOperator UI exactly. Every core myoperator-ui component (45) as verified markup with verbatim Tailwind classes, the full token set, page patterns, and a single-file HTML starter.",
   "author": {
     "name": "myOperator",

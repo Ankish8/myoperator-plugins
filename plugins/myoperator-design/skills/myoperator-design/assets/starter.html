@@ -421,6 +421,27 @@
           return;
         }
     
+        // View tabs: the active look is whatever classes the pressed button has and an
+        // unpressed one lacks (read from the markup, so it tracks the component).
+        var press = t.closest("[data-toggle-group] button[aria-pressed]");
+        if (press) {
+          if (isOff(press)) return;
+          var btns = all(press.closest("[data-toggle-group]"), "button[aria-pressed]");
+          var on3 = btns.filter(function (b) { return b.getAttribute("aria-pressed") === "true"; })[0];
+          var off3 = btns.filter(function (b) { return b.getAttribute("aria-pressed") !== "true"; })[0];
+          if (!on3 || !off3 || on3 === press) return;
+          var onC = on3.className.split(/\s+/), offC = off3.className.split(/\s+/);
+          var activeOnly = onC.filter(function (c) { return offC.indexOf(c) < 0; });
+          var inactiveOnly = offC.filter(function (c) { return onC.indexOf(c) < 0; });
+          btns.forEach(function (b) {
+            var a = b === press;
+            activeOnly.forEach(function (c) { b.classList.toggle(c, a); });
+            inactiveOnly.forEach(function (c) { b.classList.toggle(c, !a); });
+            b.setAttribute("aria-pressed", String(a));
+          });
+          return;
+        }
+    
         if (!t.closest("[data-popover]")) closePopovers();
       });
     

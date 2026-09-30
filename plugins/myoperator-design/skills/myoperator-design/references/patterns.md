@@ -2,12 +2,16 @@
 
 ## Contents
 - 1. App shell
-- 2. List page (goes inside the content card)
-- 3. Form page (goes inside the content card)
-- 4. Other compositions
+- 2. Filters (lists, tables, dashboard sections)
+  - View tabs
+  - Filter bar (view tabs + controls)
+  - Applied-filter chips — place full-bleed inside the card (it carries its own px-4 py-2 and bottom border)
+- 3. List page (goes inside the content card)
+- 4. Form page (goes inside the content card)
+- 5. Other compositions
 - Responsive
 
-How MyOperator screens are assembled. The app chrome is measured from the product's Figma handoffs; the pages are compositions of the real components. All three snippets below were verified pixel-identical against the real components.
+How MyOperator screens are assembled. The app chrome is measured from the product's Figma handoffs; the pages are compositions of the real components. Every snippet below was verified pixel-identical against the real components.
 
 ## 1. App shell
 
@@ -152,11 +156,109 @@ Use for any full-page screen of the MyOperator web panel.
 </div>
 ```
 
-## 2. List page (goes inside the content card)
+## 2. Filters (lists, tables, dashboard sections)
 
-The most common screen: PageHeader (title + count badge, search + primary action) → filter bar (Tabs left; filters right: MultiSelect, DateRangePicker, outline "More filters") → Table → PaginationWidget.
+How MyOperator filters a list — taken from the Call Logs page (`src/components/custom/call-logs`). Three parts, always in this order, directly above the table:
 
-- Filter bar: `flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between`; filter group `flex flex-wrap items-center gap-2.5 lg:flex-nowrap`, give filters fixed widths.
+1. **View tabs** (left) — quick filters and saved views: *All / Answered / Missed*, *All / Active / Failed*. Soft pills, 40px (`h-10 rounded px-3 text-sm font-semibold`), `gap-2`. Active: `bg-semantic-info-surface text-semantic-text-secondary`; inactive: `text-semantic-text-muted hover:bg-semantic-bg-hover`. First tab is always **All** and starts active. A saved view is removable (its × shows on hover). Clicking works in HTML output (`data-toggle-group`).
+2. **Filter controls** (right, `gap-2.5`) — MultiSelect, DateRangePicker, then an outline **More Filters** button (`settings-2` icon) that opens the full filter Panel. All three are 42px and use the filter-trigger look (`rounded border-semantic-border-layout text-sm font-semibold text-semantic-text-secondary`), which differs from form fields — copy it from here, not from `multi-select.md`. For the open list, reuse the popover content from `multi-select.md`.
+3. **Applied-filter chips** (only when filters are applied) — a full-width bar under the filter row: removable Tags with a bold `Label:` prefix, then *Save as Preset* (link) and *Clear All* (error).
+
+Never build filters from Buttons (`default` + `outline` in a row), a segmented control, or underline Tabs.
+
+On a dashboard, a section that filters its own table (e.g. *Recent calls*) puts the section title on its own row, then the view tabs, then the table.
+
+### View tabs
+```html
+<div class="relative flex min-w-0 max-w-full flex-1">
+  <div class="flex min-w-0 max-w-full flex-1 items-center gap-2 overflow-hidden" data-toggle-group>
+    <button type="button" aria-pressed="true" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold bg-semantic-info-surface text-semantic-text-secondary">All</button>
+    <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">Active</button>
+    <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">Failed</button>
+    <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">
+      CRM only
+      <span role="button" aria-label="Remove CRM only view" data-dismiss="button" class="items-center rounded-full p-0.5 hover:bg-semantic-bg-hover hidden group-hover:flex group-focus-within:flex">
+        <i data-lucide="x" class="size-3" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+</div>
+```
+
+### Filter bar (view tabs + controls)
+```html
+<div class="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+  <div class="relative flex min-w-0 max-w-full flex-1">
+    <div class="flex min-w-0 max-w-full flex-1 items-center gap-2 overflow-hidden" data-toggle-group>
+      <button type="button" aria-pressed="true" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold bg-semantic-info-surface text-semantic-text-secondary">All</button>
+      <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">Active</button>
+      <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">Failed</button>
+      <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">
+        CRM only
+        <span role="button" aria-label="Remove CRM only view" data-dismiss="button" class="items-center rounded-full p-0.5 hover:bg-semantic-bg-hover hidden group-hover:flex group-focus-within:flex">
+          <i data-lucide="x" class="size-3" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="flex min-w-0 shrink-0 flex-wrap items-center gap-2.5">
+    <div class="flex min-w-0 flex-col gap-1">
+      <div class="relative w-full min-w-0 flex flex-col gap-1">
+        <button type="button" role="combobox" aria-expanded="false" aria-invalid="false" class="flex min-h-[42px] items-center justify-between bg-semantic-bg-primary px-4 py-2 transition-all disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[var(--color-neutral-50)] border border-solid focus:outline-none focus:border-semantic-border-input-focus/50 focus:shadow-[0_0_0_1px_rgba(43,188,202,0.15)] text-left gap-2 rounded border-semantic-border-layout text-sm font-semibold text-semantic-text-secondary w-fit [&_span]:!text-semantic-text-secondary">
+          <div class="min-w-0 flex-1 flex flex-wrap gap-1">
+            <span class="text-base text-semantic-text-placeholder">All events</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <i data-lucide="chevron-down" class="size-4 text-semantic-text-muted transition-transform shrink-0" aria-hidden="true"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="relative inline-block max-w-full w-fit">
+      <button type="button" aria-expanded="false" class="flex items-center gap-2 border border-solid bg-semantic-bg-primary px-4 py-2.5 text-left outline-none transition-colors hover:border-semantic-border-input-focus/50 disabled:cursor-not-allowed disabled:opacity-50 h-[42px] rounded border-semantic-border-layout text-sm font-semibold text-semantic-text-secondary w-fit">
+        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-[18px] shrink-0 text-semantic-text-secondary" aria-hidden="true"><path d="M6 1.5V4.5M12 1.5V4.5M2.25 7.5H15.75M3.75 3H14.25C15.0784 3 15.75 3.67157 15.75 4.5V15C15.75 15.8284 15.0784 16.5 14.25 16.5H3.75C2.92157 16.5 2.25 15.8284 2.25 15V4.5C2.25 3.67157 2.92157 3 3.75 3Z" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span class="min-w-0 flex-1 truncate">24 Sep 2026 - 30 Sep 2026</span>
+      </button>
+    </div>
+    <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded text-sm font-semibold leading-none transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-semantic-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 border border-solid border-semantic-border-layout bg-semantic-bg-primary text-semantic-text-secondary hover:bg-semantic-primary-surface min-w-20 h-[42px] px-4 [&_svg]:size-[18px]">
+      <i data-lucide="settings-2" class="text-semantic-text-muted" aria-hidden="true"></i>
+      More Filters
+    </button>
+  </div>
+</div>
+```
+
+### Applied-filter chips — place full-bleed inside the card (it carries its own `px-4 py-2` and bottom border)
+```html
+<div data-active-filters class="flex shrink-0 items-center justify-between gap-x-2 gap-y-2 border-b border-solid border-semantic-border-layout px-4 py-2">
+  <div class="flex max-h-[76px] min-w-0 flex-1 flex-wrap items-center gap-2 overflow-y-auto overscroll-contain sm:max-h-[112px]">
+    <span class="inline-flex items-center rounded text-sm bg-semantic-bg-ui text-semantic-text-primary px-2 py-1">
+      <span class="font-semibold mr-1">Status:</span>
+      <span class="font-normal inline-flex items-center gap-1">Failed</span>
+      <button type="button" class="inline-flex items-center justify-center shrink-0 bg-transparent border-none p-0 ml-0.5 cursor-pointer" aria-label="Remove Status: Failed" data-dismiss="span">
+        <i data-lucide="x" class="size-3" aria-hidden="true"></i>
+      </button>
+    </span>
+    <span class="inline-flex items-center rounded text-sm bg-semantic-bg-ui text-semantic-text-primary px-2 py-1">
+      <span class="font-semibold mr-1">Event:</span>
+      <span class="font-normal inline-flex items-center gap-1">After Call Event</span>
+      <button type="button" class="inline-flex items-center justify-center shrink-0 bg-transparent border-none p-0 ml-0.5 cursor-pointer" aria-label="Remove Event: After Call Event" data-dismiss="span">
+        <i data-lucide="x" class="size-3" aria-hidden="true"></i>
+      </button>
+    </span>
+  </div>
+  <div class="flex shrink-0 items-center gap-4">
+    <button type="button" class="text-sm font-semibold text-semantic-text-link hover:underline">Save as Preset</button>
+    <button type="button" class="text-sm font-semibold text-semantic-error-primary hover:underline" data-dismiss="[data-active-filters]">Clear All</button>
+  </div>
+</div>
+```
+
+## 3. List page (goes inside the content card)
+
+The most common screen: PageHeader (title + count badge, search + primary action) → filter bar (section 2) → Table → PaginationWidget.
+
+- Filter bar: `flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between`; controls `flex flex-wrap items-center gap-2.5`, sized to their content (`w-fit`).
 - Header search: TextField with `search` icon, `w-full lg:w-[320px]`.
 - Empty result → EmptyState inside the card instead of the table; loading → Table skeleton rows.
 
@@ -212,39 +314,41 @@ The most common screen: PageHeader (title + count badge, search + primary action
   </div>
   <div class="flex min-w-0 flex-col gap-4 px-5 pb-5 pt-6">
     <div class="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-      <div class="min-w-0 flex-1">
-        <div role="tablist" aria-orientation="horizontal" class="inline-flex items-center border-b border-solid border-semantic-border-layout w-full">
-          <button type="button" role="tab" aria-selected="true" data-state="active" class="inline-flex items-center justify-center gap-2 whitespace-nowrap py-3 px-3 text-sm font-medium border-b-2 border-solid -mb-px cursor-pointer transition-colors text-semantic-text-muted border-transparent hover:text-semantic-text-secondary data-[state=active]:text-semantic-text-primary data-[state=active]:border-semantic-primary focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">All</button>
-          <button type="button" role="tab" aria-selected="false" data-state="inactive" class="inline-flex items-center justify-center gap-2 whitespace-nowrap py-3 px-3 text-sm font-medium border-b-2 border-solid -mb-px cursor-pointer transition-colors text-semantic-text-muted border-transparent hover:text-semantic-text-secondary data-[state=active]:text-semantic-text-primary data-[state=active]:border-semantic-primary focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">Active</button>
-          <button type="button" role="tab" aria-selected="false" data-state="inactive" class="inline-flex items-center justify-center gap-2 whitespace-nowrap py-3 px-3 text-sm font-medium border-b-2 border-solid -mb-px cursor-pointer transition-colors text-semantic-text-muted border-transparent hover:text-semantic-text-secondary data-[state=active]:text-semantic-text-primary data-[state=active]:border-semantic-primary focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50">Failed</button>
+      <div class="relative flex min-w-0 max-w-full flex-1">
+        <div class="flex min-w-0 max-w-full flex-1 items-center gap-2 overflow-hidden" data-toggle-group>
+          <button type="button" aria-pressed="true" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold bg-semantic-info-surface text-semantic-text-secondary">All</button>
+          <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">Active</button>
+          <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">Failed</button>
+          <button type="button" aria-pressed="false" class="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded px-3 text-sm font-semibold text-semantic-text-muted hover:bg-semantic-bg-hover">
+            CRM only
+            <span role="button" aria-label="Remove CRM only view" data-dismiss="button" class="items-center rounded-full p-0.5 hover:bg-semantic-bg-hover hidden group-hover:flex group-focus-within:flex">
+              <i data-lucide="x" class="size-3" aria-hidden="true"></i>
+            </span>
+          </button>
         </div>
       </div>
-      <div class="flex min-w-0 shrink-0 flex-wrap items-center gap-2.5 lg:flex-nowrap">
-        <div class="w-[200px]">
-          <div class="flex min-w-0 flex-col gap-1">
-            <div class="relative w-full min-w-0 flex flex-col gap-1">
-              <button type="button" role="combobox" aria-expanded="false" aria-invalid="false" class="flex min-h-[42px] w-full items-center justify-between rounded bg-semantic-bg-primary px-4 py-2 text-base text-semantic-text-primary transition-all disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[var(--color-neutral-50)] border border-solid border-semantic-border-input focus:outline-none focus:border-semantic-border-input-focus/50 focus:shadow-[0_0_0_1px_rgba(43,188,202,0.15)] text-left gap-2">
-                <div class="min-w-0 flex-1 flex flex-wrap gap-1">
-                  <span class="text-base text-semantic-text-placeholder">All events</span>
-                </div>
-                <div class="flex items-center gap-2 shrink-0">
-                  <i data-lucide="chevron-down" class="size-4 text-semantic-text-muted transition-transform shrink-0" aria-hidden="true"></i>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="w-[240px]">
-          <div class="relative inline-block w-full max-w-full">
-            <button type="button" aria-expanded="false" class="flex h-10 w-full items-center gap-2 rounded border border-solid border-semantic-border-input bg-semantic-bg-primary px-4 py-2.5 text-left text-sm outline-none transition-colors hover:border-semantic-border-input-focus/50 disabled:cursor-not-allowed disabled:opacity-50 text-semantic-text-placeholder">
-              <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-[18px] shrink-0 text-semantic-text-secondary" aria-hidden="true"><path d="M6 1.5V4.5M12 1.5V4.5M2.25 7.5H15.75M3.75 3H14.25C15.0784 3 15.75 3.67157 15.75 4.5V15C15.75 15.8284 15.0784 16.5 14.25 16.5H3.75C2.92157 16.5 2.25 15.8284 2.25 15V4.5C2.25 3.67157 2.92157 3 3.75 3Z" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-              <span class="min-w-0 flex-1 truncate font-normal">Date Range</span>
+      <div class="flex min-w-0 shrink-0 flex-wrap items-center gap-2.5">
+        <div class="flex min-w-0 flex-col gap-1">
+          <div class="relative w-full min-w-0 flex flex-col gap-1">
+            <button type="button" role="combobox" aria-expanded="false" aria-invalid="false" class="flex min-h-[42px] items-center justify-between bg-semantic-bg-primary px-4 py-2 transition-all disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[var(--color-neutral-50)] border border-solid focus:outline-none focus:border-semantic-border-input-focus/50 focus:shadow-[0_0_0_1px_rgba(43,188,202,0.15)] text-left gap-2 rounded border-semantic-border-layout text-sm font-semibold text-semantic-text-secondary w-fit [&_span]:!text-semantic-text-secondary">
+              <div class="min-w-0 flex-1 flex flex-wrap gap-1">
+                <span class="text-base text-semantic-text-placeholder">All events</span>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <i data-lucide="chevron-down" class="size-4 text-semantic-text-muted transition-transform shrink-0" aria-hidden="true"></i>
+              </div>
             </button>
           </div>
         </div>
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded text-sm font-semibold leading-none transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-semantic-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 border border-solid border-semantic-border-layout bg-semantic-bg-primary text-semantic-text-secondary hover:bg-semantic-primary-surface h-9 min-w-20 px-4 [&_svg]:size-4">
-          <i data-lucide="settings-2" aria-hidden="true"></i>
-          More filters
+        <div class="relative inline-block max-w-full w-fit">
+          <button type="button" aria-expanded="false" class="flex items-center gap-2 border border-solid bg-semantic-bg-primary px-4 py-2.5 text-left outline-none transition-colors hover:border-semantic-border-input-focus/50 disabled:cursor-not-allowed disabled:opacity-50 h-[42px] rounded border-semantic-border-layout text-sm font-semibold text-semantic-text-secondary w-fit">
+            <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-[18px] shrink-0 text-semantic-text-secondary" aria-hidden="true"><path d="M6 1.5V4.5M12 1.5V4.5M2.25 7.5H15.75M3.75 3H14.25C15.0784 3 15.75 3.67157 15.75 4.5V15C15.75 15.8284 15.0784 16.5 14.25 16.5H3.75C2.92157 16.5 2.25 15.8284 2.25 15V4.5C2.25 3.67157 2.92157 3 3.75 3Z" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span class="min-w-0 flex-1 truncate">24 Sep 2026 - 30 Sep 2026</span>
+          </button>
+        </div>
+        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded text-sm font-semibold leading-none transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-semantic-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 border border-solid border-semantic-border-layout bg-semantic-bg-primary text-semantic-text-secondary hover:bg-semantic-primary-surface min-w-20 h-[42px] px-4 [&_svg]:size-[18px]">
+          <i data-lucide="settings-2" class="text-semantic-text-muted" aria-hidden="true"></i>
+          More Filters
         </button>
       </div>
     </div>
@@ -374,7 +478,7 @@ The most common screen: PageHeader (title + count badge, search + primary action
 </div>
 ```
 
-## 3. Form page (goes inside the content card)
+## 4. Form page (goes inside the content card)
 
 Create/edit screens that are too big for a FormModal.
 
@@ -458,7 +562,7 @@ Create/edit screens that are too big for a FormModal.
 </div>
 ```
 
-## 4. Other compositions
+## 5. Other compositions
 
 - **Detail + side panel**: `flex` row — main content (`flex-1`) + Panel (`panel.md`) as the last child.
 - **Confirm before destructive actions**: ConfirmationModal (`destructive`) or DeleteConfirmationModal (`modals.md`); after success, a `success` Toast.
@@ -469,4 +573,4 @@ Create/edit screens that are too big for a FormModal.
 
 ## Responsive
 
-The components are responsive by themselves (PageHeader stacks actions, dialogs go full-width, Previous/Next labels hide). For layout: sidebar hidden below `md`; filter bars wrap below `lg`; two-column forms collapse below `sm`; tables scroll horizontally (never squeeze columns — give the table a `min-w-[…]` inside an `overflow-x-auto` wrapper).
+The components are responsive by themselves (PageHeader stacks actions, dialogs go full-width, Previous/Next labels hide). For layout: sidebar hidden below `md`; filter bars stack below `lg` (tabs above controls); two-column forms collapse below `sm`; tables scroll horizontally (never squeeze columns — give the table a `min-w-[…]` inside an `overflow-x-auto` wrapper).

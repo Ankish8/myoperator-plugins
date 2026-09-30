@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "myoperator-design",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "Design screens that match production myOperator UI exactly: all 45 core myoperator-ui components as verified markup with verbatim Tailwind classes, tokens, page patterns and a single-file HTML starter.",
       "author": {
         "name": "myOperator",

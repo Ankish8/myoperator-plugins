@@ -3,13 +3,13 @@ name: myoperator-design
 description: This skill should be used when the user asks to design, mock up, prototype or build a screen, page, dashboard, form, modal or component "in myOperator style", "with the myOperator design system", "using myoperator-ui" / "MyOperator UI", or for MyOperator products (call logs, IVR, WhatsApp, contacts, webhooks, APIs, billing, bots, inbox). It reproduces the production myoperator-ui React components exactly — same classes, tokens, typography, icons and states — as a single HTML file (default) or React/Tailwind code.
 compatibility: HTML output loads Tailwind CSS 3.4, the Source Sans Pro font and Lucide icons from public CDNs, so viewing a generated screen needs internet access.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
   mirrors: "myoperator-ui 0.0.459"
 ---
 
 # myOperator Design System
 
-This skill is an exact replica of **myoperator-ui v0.0.459** — the component library MyOperator ships to production (45 core components in `src/components/ui`). Every snippet in `references/components/` is the real component's rendered markup with its **verbatim Tailwind classes**, verified pixel-identical against the real React component (computed styles, sizes and positions of 1,600+ elements across 162 cases).
+This skill is an exact replica of **myoperator-ui v0.0.459** — the component library MyOperator ships to production (45 core components in `src/components/ui`). Every snippet in `references/components/` is the real component's rendered markup with its **verbatim Tailwind classes**, verified pixel-identical against the real React component (computed styles, sizes and positions of 1,650+ elements across 165 cases).
 
 The job is to **assemble** screens from these parts — not to restyle, simplify or reinvent them.
 
@@ -17,7 +17,7 @@ The job is to **assemble** screens from these parts — not to restyle, simplify
 
 1. **Choose the output.** Default: one self-contained `.html` file (opens in any browser). React/JSX only when asked or when working inside a React codebase — then read `references/react.md`.
 2. **Start from the starter.** Copy `assets/starter.html` to the output path with a file copy (`cp`) — do not retype or trim it — put the screen inside `<body>` in place of `<!-- SCREEN CONTENT GOES HERE -->`, and set the `<title>`. It carries the tokens, the Tailwind theme (via Tailwind's CDN runtime), the Source Sans Pro font, Lucide icons, and a small behaviours script. Without it nothing renders correctly. (If files cannot be copied, reproduce it exactly.)
-3. **Plan the screen.** Map every piece of UI to a component in the index below; lay the page out with `references/patterns.md` (app shell, list page, form page).
+3. **Plan the screen.** Map every piece of UI to a component in the index below; lay the page out with `references/patterns.md` (app shell, filters, list page, form page).
 4. **For every component, open its reference file and copy the markup verbatim.** Change only text, icon names (`data-lucide`), the number of rows/options, and state (`data-state`, `aria-*`, `disabled`, `hidden`). Never add, drop or "tidy" classes on component markup.
 5. **Write only layout yourself** — wrappers with flex/grid/gap/padding/width. Any color, radius, shadow or font size in that layout comes from `references/foundations.md`.
 6. **Run the checklist** at the end before handing over.
@@ -46,7 +46,8 @@ The job is to **assemble** screens from these parts — not to restyle, simplify
 | Date range with presets | DateRangePicker | `references/components/date-range-picker.md` |
 | Tabular data (+ loading, empty, toggles, row actions) | Table | `references/components/table.md` |
 | Paging | Pagination, PaginationWidget | `references/components/pagination.md` |
-| Switch views in a page | Tabs | `references/components/tabs.md` |
+| Filter a list/table: All / Answered / Missed, saved views, filter dropdowns, applied-filter chips | View tabs + filter bar | `references/patterns.md` → Filters |
+| Switch between content sections (Overview / Notes) | Tabs | `references/components/tabs.md` |
 | Collapsible sections / FAQ | Accordion | `references/components/accordion.md` |
 | Page title bar | PageHeader | `references/components/page-header.md` |
 | Side details/edit panel | Panel | `references/components/panel.md` |
@@ -78,12 +79,13 @@ Not in the library (compose from tokens + patterns): app sidebar/top bar (`patte
 2. No hex/rgb colors, no Tailwind palette colors (`bg-gray-100`, `text-blue-600`, …) — semantic classes or `var(--semantic-…)` only.
 3. Don't change the starter's `<head>`, and don't load other fonts, weights or Tailwind versions.
 4. Badge = status pill; Tag = category rectangle. One `default` (primary) button per view; Cancel is `outline` and sits left of the primary action.
-5. Every `<p>` has `m-0`. Every overlay has `z-[9999]`. Icon-only buttons have `aria-label`.
-6. Realistic MyOperator copy (Indian names and numbers, call/WhatsApp/IVR/webhook domain) — no lorem ipsum.
+5. Filters are view tabs + the filter bar (`patterns.md` → Filters) — never a row of Buttons, a segmented control or underline Tabs.
+6. Every `<p>` has `m-0`. Every overlay has `z-[9999]`. Icon-only buttons have `aria-label`.
+7. Realistic MyOperator copy (Indian names and numbers, call/WhatsApp/IVR/webhook domain) — no lorem ipsum.
 
 ## Interactivity (HTML output)
 
-The starter's behaviours script makes copied markup clickable with no extra code: switches, checkboxes, tabs (`data-tabs` + `data-value`; give every tab its own `role="tabpanel"`), accordions (`data-accordion`), popovers — select, multi-select, dropdown, date pickers (`data-popover`, `data-popover-trigger`, `data-popover-content`), dialogs (`data-dialog`, `data-dialog-open="#id"`, `data-dialog-close`), tooltips (`data-tooltip`), and removable alerts/tags/toasts (`data-dismiss`). Reference snippets show open states; add `hidden` to a popover/dialog/tooltip content element to start it closed. Anything else: plain `<script>` at the end of `<body>`.
+The starter's behaviours script makes copied markup clickable with no extra code: switches, checkboxes, tabs (`data-tabs` + `data-value`; give every tab its own `role="tabpanel"`), accordions (`data-accordion`), popovers — select, multi-select, dropdown, date pickers (`data-popover`, `data-popover-trigger`, `data-popover-content`), dialogs (`data-dialog`, `data-dialog-open="#id"`, `data-dialog-close`), tooltips (`data-tooltip`), and removable alerts/tags/toasts (`data-dismiss`), and view tabs (`data-toggle-group`). Reference snippets show open states; add `hidden` to a popover/dialog/tooltip content element to start it closed. Anything else: plain `<script>` at the end of `<body>`.
 
 ## Checklist before finishing
 
@@ -92,5 +94,6 @@ The starter's behaviours script makes copied markup clickable with no extra code
 - [ ] No hex values, no `gray-*`/`blue-*`/`slate-*` Tailwind colors, no inline color styles.
 - [ ] Heights: buttons 36/32/40, fields 42; field stacks `gap-1`, forms `gap-4`, button rows `gap-2`.
 - [ ] Turquoise appears only as focus borders / selection checks / logo.
+- [ ] Any list/table filter uses view tabs + the filter bar, not Buttons or Tabs.
 - [ ] Page uses the app shell + white content card (unless the user asked for a single component).
 - [ ] Opened the file in a browser (or rendered it) and looked at it when tooling allows.

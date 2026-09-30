@@ -164,10 +164,7 @@ Start–end range for filters and reports ("7 Sep 2026 - 12 Sep 2026"). Placehol
               <button type="button" aria-label="September 25, 2026" aria-pressed="false" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">25</button>
             </div>
             <div class="relative flex h-9 items-center justify-center sm:h-8">
-              <button type="button" aria-label="September 26, 2026" aria-pressed="false" aria-current="date" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">
-                26
-                <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 size-1 rounded-full bg-semantic-primary"></span>
-              </button>
+              <button type="button" aria-label="September 26, 2026" aria-pressed="false" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">26</button>
             </div>
             <div class="relative flex h-9 items-center justify-center sm:h-8">
               <button type="button" aria-label="September 27, 2026" aria-pressed="false" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">27</button>
@@ -179,7 +176,10 @@ Start–end range for filters and reports ("7 Sep 2026 - 12 Sep 2026"). Placehol
               <button type="button" aria-label="September 29, 2026" aria-pressed="false" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">29</button>
             </div>
             <div class="relative flex h-9 items-center justify-center sm:h-8">
-              <button type="button" aria-label="September 30, 2026" aria-pressed="false" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">30</button>
+              <button type="button" aria-label="September 30, 2026" aria-pressed="false" aria-current="date" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-primary hover:bg-semantic-bg-hover">
+                30
+                <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 size-1 rounded-full bg-semantic-primary"></span>
+              </button>
             </div>
             <div class="relative flex h-9 items-center justify-center sm:h-8">
               <button type="button" aria-label="October 1, 2026" aria-pressed="false" class="relative flex h-9 w-full max-w-9 items-center justify-center rounded-full text-xs transition-colors sm:h-8 sm:max-w-8 text-semantic-text-muted hover:bg-semantic-bg-hover">1</button>
